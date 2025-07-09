@@ -9,6 +9,7 @@ export interface DetectionResult {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export interface FrameAnalysis {
   frameNumber: number;
   timestamp?: number;
@@ -28,31 +29,35 @@ export interface Detection {
   bbox: [number, number, number, number]; // [x, y, width, height]
 }
 
+=======
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
 export interface FrameAnalysis {
   frameNumber: number;
+  timestamp?: number;
   fishCount: number;
-  detections: Detection[];
-  timestamp: string;
-  imageData: {
-    type: 'image' | 'video';
-    src: string;
-  };
+  detections: DetectionResult[];
+  imageData?: string;
 }
 
-
-
 export interface ProcessingStats {
-  totalFishDetected: number;
+  totalFrames: number;
   processedFrames: number;
+<<<<<<< HEAD
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+  totalFishDetected: number;
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
   averageFishPerFrame: number;
   processingTime: number;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
 export interface ExportData {
   frameNumber: number;
   timestamp: string;
@@ -60,10 +65,16 @@ export interface ExportData {
   confidence: number;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
 
 export interface DetectionResponse {
   count: number;
   detections: DetectionResult[];
 }
+<<<<<<< HEAD
 =======
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)

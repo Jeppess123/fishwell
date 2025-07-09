@@ -12,10 +12,14 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({
   onFilesSelected,
 <<<<<<< HEAD
+<<<<<<< HEAD
   acceptedTypes = '',
 =======
   acceptedTypes,
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+  acceptedTypes = '',
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
   multiple = false,
   disabled = false
 }) => {
@@ -25,12 +29,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (!disabled) setIsDragOver(true);
 =======
     if (!disabled) {
       setIsDragOver(true);
     }
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+    if (!disabled) setIsDragOver(true);
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
   }, [disabled]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -42,9 +50,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
     e.preventDefault();
     setIsDragOver(false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
     if (disabled) return;
 
     const files = Array.from(e.dataTransfer.files);
@@ -55,10 +66,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
     const files = Array.from(e.target.files || []);
     setSelectedFiles(files);
     onFilesSelected(files);
@@ -71,6 +86,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }, [selectedFiles, onFilesSelected]);
 
   const getFileIcon = (file: File) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (file.type.startsWith('video/')) return <Video className="w-5 h-5 text-purple-500" />;
     if (file.type.startsWith('image/')) return <Image className="w-5 h-5 text-green-500" />;
@@ -92,12 +108,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
     if (file.type.startsWith('image/')) {
       return <Image className="w-5 h-5 text-green-500" />;
     }
+=======
+    if (file.type.startsWith('video/')) return <Video className="w-5 h-5 text-purple-500" />;
+    if (file.type.startsWith('image/')) return <Image className="w-5 h-5 text-green-500" />;
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
     return <FolderOpen className="w-5 h-5 text-blue-500" />;
   };
+
+  const typeDescription = acceptedTypes?.includes('video') ? 'videos or images' : 'files';
 
   return (
     <div className="space-y-4">
       <motion.div
+<<<<<<< HEAD
         className={`
           relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
           ${isDragOver 
@@ -107,6 +130,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         `}
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+        className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
+          ${isDragOver ? 'border-blue-400 bg-blue-50 scale-105' : 'border-gray-300 hover:border-blue-300 hover:bg-gray-50'}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -122,10 +150,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
         />
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
         <div className="space-y-4">
           <motion.div
             animate={isDragOver ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
@@ -134,15 +166,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
             <Upload className="w-12 h-12 mx-auto text-gray-400" />
           </motion.div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
           
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
           <div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
               {multiple ? 'Upload Files' : 'Upload File'}
             </h3>
             <p className="text-gray-500 text-sm">
+<<<<<<< HEAD
 <<<<<<< HEAD
               Drag and drop your {typeDescription} here, or click to browse
             </p>
@@ -154,6 +191,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
             <p className="text-xs text-gray-400 mt-2">
               Supported formats: {acceptedTypes.split(',').join(', ')}
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+              Drag and drop your {typeDescription} here, or click to browse
+            </p>
+            <p className="text-xs text-gray-400 mt-2">
+              Supported formats: {acceptedTypes?.split(',').join(', ') || 'any'}
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
             </p>
           </div>
         </div>
@@ -181,12 +224,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
                   <div>
                     <p className="font-medium text-gray-700 text-sm">{file.name}</p>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
 =======
                     <p className="text-xs text-gray-500">
                       {(file.size / 1024 / 1024).toFixed(2)} MB
                     </p>
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+                    <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
                   </div>
                 </div>
                 <button
@@ -205,7 +252,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default FileUpload;
 =======
 export default FileUpload;
 >>>>>>> 02b14d68 (kommitter prosjektet)
+=======
+export default FileUpload;
+>>>>>>> f142bbeb (Fix YOLOv8 dataset structure and frontend cleanup)
