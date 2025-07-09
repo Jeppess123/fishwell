@@ -11,7 +11,11 @@ interface FileUploadProps {
 
 const FileUpload: React.FC<FileUploadProps> = ({
   onFilesSelected,
+<<<<<<< HEAD
   acceptedTypes = '',
+=======
+  acceptedTypes,
+>>>>>>> 02b14d68 (kommitter prosjektet)
   multiple = false,
   disabled = false
 }) => {
@@ -20,7 +24,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
+<<<<<<< HEAD
     if (!disabled) setIsDragOver(true);
+=======
+    if (!disabled) {
+      setIsDragOver(true);
+    }
+>>>>>>> 02b14d68 (kommitter prosjektet)
   }, [disabled]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -31,6 +41,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 02b14d68 (kommitter prosjektet)
     if (disabled) return;
 
     const files = Array.from(e.dataTransfer.files);
@@ -40,7 +54,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 02b14d68 (kommitter prosjektet)
     const files = Array.from(e.target.files || []);
     setSelectedFiles(files);
     onFilesSelected(files);
@@ -53,6 +71,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }, [selectedFiles, onFilesSelected]);
 
   const getFileIcon = (file: File) => {
+<<<<<<< HEAD
     if (file.type.startsWith('video/')) return <Video className="w-5 h-5 text-purple-500" />;
     if (file.type.startsWith('image/')) return <Image className="w-5 h-5 text-green-500" />;
     return <FolderOpen className="w-5 h-5 text-blue-500" />;
@@ -66,6 +85,28 @@ const FileUpload: React.FC<FileUploadProps> = ({
         className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
           ${isDragOver ? 'border-blue-400 bg-blue-50 scale-105' : 'border-gray-300 hover:border-blue-300 hover:bg-gray-50'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+=======
+    if (file.type.startsWith('video/')) {
+      return <Video className="w-5 h-5 text-purple-500" />;
+    }
+    if (file.type.startsWith('image/')) {
+      return <Image className="w-5 h-5 text-green-500" />;
+    }
+    return <FolderOpen className="w-5 h-5 text-blue-500" />;
+  };
+
+  return (
+    <div className="space-y-4">
+      <motion.div
+        className={`
+          relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
+          ${isDragOver 
+            ? 'border-blue-400 bg-blue-50 scale-105' 
+            : 'border-gray-300 hover:border-blue-300 hover:bg-gray-50'
+          }
+          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+        `}
+>>>>>>> 02b14d68 (kommitter prosjektet)
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -80,7 +121,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
           disabled={disabled}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
         />
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 02b14d68 (kommitter prosjektet)
         <div className="space-y-4">
           <motion.div
             animate={isDragOver ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
@@ -88,16 +133,27 @@ const FileUpload: React.FC<FileUploadProps> = ({
           >
             <Upload className="w-12 h-12 mx-auto text-gray-400" />
           </motion.div>
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> 02b14d68 (kommitter prosjektet)
           <div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
               {multiple ? 'Upload Files' : 'Upload File'}
             </h3>
             <p className="text-gray-500 text-sm">
+<<<<<<< HEAD
               Drag and drop your {typeDescription} here, or click to browse
             </p>
             <p className="text-xs text-gray-400 mt-2">
               Supported formats: {acceptedTypes?.split(',').join(', ') || 'any'}
+=======
+              Drag and drop your {acceptedTypes.includes('video') ? 'videos or images' : 'files'} here, or click to browse
+            </p>
+            <p className="text-xs text-gray-400 mt-2">
+              Supported formats: {acceptedTypes.split(',').join(', ')}
+>>>>>>> 02b14d68 (kommitter prosjektet)
             </p>
           </div>
         </div>
@@ -124,7 +180,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
                   {getFileIcon(file)}
                   <div>
                     <p className="font-medium text-gray-700 text-sm">{file.name}</p>
+<<<<<<< HEAD
                     <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+=======
+                    <p className="text-xs text-gray-500">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
+>>>>>>> 02b14d68 (kommitter prosjektet)
                   </div>
                 </div>
                 <button
@@ -142,4 +204,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
   );
 };
 
+<<<<<<< HEAD
 export default FileUpload;
+=======
+export default FileUpload;
+>>>>>>> 02b14d68 (kommitter prosjektet)

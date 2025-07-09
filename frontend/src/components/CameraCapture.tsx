@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Camera, CameraOff, Play, Square, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -130,16 +131,63 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         {!isCameraActive ? (
+=======
+import React, { useEffect, useRef, useState } from 'react';
+import { Camera } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const CameraCapture: React.FC = () => {
+  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((mediaDevices) => {
+        setDevices(mediaDevices.filter(device => device.kind === 'videoinput'));
+      })
+      .catch(() => setError('Could not access camera devices.'));
+  }, []);
+
+  // Start camera logic
+  const startCamera = async () => {
+    try {
+      setError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        setIsCameraActive(true);
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      setError('Could not start camera.');
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Camera Controls */}
+      <div className="flex flex-wrap items-center gap-3">
+        {!isCameraActive && (
+>>>>>>> 02b14d68 (kommitter prosjektet)
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={startCamera}
+<<<<<<< HEAD
             disabled={disabled}
             className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+=======
+            className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg"
+>>>>>>> 02b14d68 (kommitter prosjektet)
           >
             <Camera className="w-5 h-5" />
             <span>Start Camera</span>
           </motion.button>
+<<<<<<< HEAD
         ) : (
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -187,12 +235,15 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
             <Download className="w-5 h-5" />
             <span>Snapshot</span>
           </motion.button>
+=======
+>>>>>>> 02b14d68 (kommitter prosjektet)
         )}
       </div>
 
       {/* Camera Device Selection */}
       {devices.length > 1 && (
         <div className="flex items-center space-x-3">
+<<<<<<< HEAD
           <label className="text-sm font-medium text-gray-700">Camera:</label>
           <select
             value={selectedDevice}
@@ -209,6 +260,13 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
         </div>
       )}
 
+=======
+          {/* ...device selector... */}
+        </div>
+      )}
+
+      {/* Error Display */}
+>>>>>>> 02b14d68 (kommitter prosjektet)
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -219,18 +277,46 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
         </motion.div>
       )}
 
+<<<<<<< HEAD
       <div className="relative bg-black rounded-xl overflow-hidden shadow-lg">
+=======
+      {/* Camera Feed with overlays */}
+      <div className="relative w-full max-w-xl aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
+>>>>>>> 02b14d68 (kommitter prosjektet)
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
+<<<<<<< HEAD
           className="w-full h-auto max-h-96 object-cover"
           style={{ display: isCameraActive ? 'block' : 'none' }}
         />
 
         {!isCameraActive && (
           <div className="aspect-video flex items-center justify-center bg-gray-100 text-gray-500">
+=======
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          style={{ display: isCameraActive ? 'block' : 'none' }}
+        />
+
+        {/* Overlay for status indicators */}
+        {isCameraActive && (
+          <div className="absolute top-4 left-4 flex space-x-2 z-10">
+            <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-2">
+              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <span>Live</span>
+            </div>
+          </div>
+        )}
+
+        {/* Hidden canvas for frame capture */}
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+        {/* Camera Not Active Overlay */}
+        {!isCameraActive && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500">
+>>>>>>> 02b14d68 (kommitter prosjektet)
             <div className="text-center">
               <Camera className="w-16 h-16 mx-auto mb-4 text-gray-400" />
               <p className="text-lg font-medium">Camera Not Active</p>
@@ -238,6 +324,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
             </div>
           </div>
         )}
+<<<<<<< HEAD
 
         {isCameraActive && (
           <div className="absolute top-4 left-4 flex space-x-2">
@@ -256,8 +343,15 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
       </div>
 
       <canvas ref={canvasRef} style={{ display: 'none' }} />
+=======
+      </div>
+>>>>>>> 02b14d68 (kommitter prosjektet)
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default CameraCapture;
+=======
+export default CameraCapture;
+>>>>>>> 02b14d68 (kommitter prosjektet)
