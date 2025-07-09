@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Square, Download, BarChart3, Clock, Fish } from 'lucide-react';
+import { Play, Pause, Square, Download, BarChart3, Clock, Fish } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ProcessingStats } from '../types/detection';
 
@@ -20,6 +20,11 @@ const ProcessingPanel: React.FC<ProcessingPanelProps> = ({
   stats,
   progress
 }) => {
+  // Midlertidig pauseknapp – du kan koble til faktisk logikk senere
+  const handlePause = () => {
+    console.log('Pause clicked – implementer faktisk pausefunksjonalitet her');
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-6">
@@ -31,7 +36,7 @@ const ProcessingPanel: React.FC<ProcessingPanelProps> = ({
 
       <div className="space-y-6">
         {/* Control Buttons */}
-        <div className="flex space-x-3">
+        <div className="flex flex-wrap gap-3">
           {!isProcessing ? (
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -43,22 +48,34 @@ const ProcessingPanel: React.FC<ProcessingPanelProps> = ({
               <span>Start Detection</span>
             </motion.button>
           ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onStopProcessing}
-              className="flex items-center space-x-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <Square className="w-5 h-5" />
-              <span>Stop Detection</span>
-            </motion.button>
+            <>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handlePause}
+                className="flex items-center space-x-2 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Pause className="w-5 h-5" />
+                <span>Pause</span>
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onStopProcessing}
+                className="flex items-center space-x-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                <Square className="w-5 h-5" />
+                <span>Stop Detection</span>
+              </motion.button>
+            </>
           )}
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onExportResults}
-            disabled={!stats || stats.processedFrames=== 0}
+            disabled={!stats || stats.processedFrames === 0}
             className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download className="w-5 h-5" />
@@ -111,7 +128,7 @@ const ProcessingPanel: React.FC<ProcessingPanelProps> = ({
                 <span className="text-sm font-medium text-purple-800">Frames</span>
               </div>
               <p className="text-2xl font-bold text-purple-900">
-                {stats.processedFrames}/{stats.processedFrames}
+                {stats.processedFrames}/{stats.totalFrames}
               </p>
             </div>
 
@@ -121,7 +138,7 @@ const ProcessingPanel: React.FC<ProcessingPanelProps> = ({
                 <span className="text-sm font-medium text-orange-800">Time</span>
               </div>
               <p className="text-2xl font-bold text-orange-900">
-                {(stats.processingTime / 1000).toFixed(1)}s
+                {stats.processingTime.toFixed(1)}s
               </p>
             </div>
           </div>

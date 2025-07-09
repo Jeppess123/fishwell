@@ -11,7 +11,7 @@ interface FileUploadProps {
 
 const FileUpload: React.FC<FileUploadProps> = ({
   onFilesSelected,
-  acceptedTypes,
+  acceptedTypes = '',
   multiple = false,
   disabled = false
 }) => {
@@ -20,9 +20,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-    if (!disabled) {
-      setIsDragOver(true);
-    }
+    if (!disabled) setIsDragOver(true);
   }, [disabled]);
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -33,7 +31,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    
     if (disabled) return;
 
     const files = Array.from(e.dataTransfer.files);
@@ -43,7 +40,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
-    
+
     const files = Array.from(e.target.files || []);
     setSelectedFiles(files);
     onFilesSelected(files);
@@ -56,26 +53,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }, [selectedFiles, onFilesSelected]);
 
   const getFileIcon = (file: File) => {
-    if (file.type.startsWith('video/')) {
-      return <Video className="w-5 h-5 text-purple-500" />;
-    }
-    if (file.type.startsWith('image/')) {
-      return <Image className="w-5 h-5 text-green-500" />;
-    }
+    if (file.type.startsWith('video/')) return <Video className="w-5 h-5 text-purple-500" />;
+    if (file.type.startsWith('image/')) return <Image className="w-5 h-5 text-green-500" />;
     return <FolderOpen className="w-5 h-5 text-blue-500" />;
   };
+
+  const typeDescription = acceptedTypes?.includes('video') ? 'videos or images' : 'files';
 
   return (
     <div className="space-y-4">
       <motion.div
-        className={`
-          relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
-          ${isDragOver 
-            ? 'border-blue-400 bg-blue-50 scale-105' 
-            : 'border-gray-300 hover:border-blue-300 hover:bg-gray-50'
-          }
-          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-        `}
+        className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300
+          ${isDragOver ? 'border-blue-400 bg-blue-50 scale-105' : 'border-gray-300 hover:border-blue-300 hover:bg-gray-50'}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -90,7 +80,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           disabled={disabled}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
         />
-        
+
         <div className="space-y-4">
           <motion.div
             animate={isDragOver ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
@@ -98,16 +88,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
           >
             <Upload className="w-12 h-12 mx-auto text-gray-400" />
           </motion.div>
-          
+
           <div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
               {multiple ? 'Upload Files' : 'Upload File'}
             </h3>
             <p className="text-gray-500 text-sm">
-              Drag and drop your {acceptedTypes.includes('video') ? 'videos or images' : 'files'} here, or click to browse
+              Drag and drop your {typeDescription} here, or click to browse
             </p>
             <p className="text-xs text-gray-400 mt-2">
-              Supported formats: {acceptedTypes.split(',').join(', ')}
+              Supported formats: {acceptedTypes?.split(',').join(', ') || 'any'}
             </p>
           </div>
         </div>
@@ -134,9 +124,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                   {getFileIcon(file)}
                   <div>
                     <p className="font-medium text-gray-700 text-sm">{file.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {(file.size / 1024 / 1024).toFixed(2)} MB
-                    </p>
+                    <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                   </div>
                 </div>
                 <button

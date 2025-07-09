@@ -8,36 +8,30 @@ export interface DetectionResult {
   class: string;
 }
 
-export interface Detection {
-  class: string;
-  confidence: number;
-  bbox: [number, number, number, number]; // [x, y, width, height]
-}
-
 export interface FrameAnalysis {
   frameNumber: number;
+  timestamp?: number;
   fishCount: number;
-  detections: Detection[];
-  timestamp: string;
-  imageData: {
-    type: 'image' | 'video';
-    src: string;
-  };
+  detections: DetectionResult[];
+  imageData?: string;
 }
 
-
-
 export interface ProcessingStats {
-  totalFishDetected: number;
+  totalFrames: number;
   processedFrames: number;
+  totalFishDetected: number;
   averageFishPerFrame: number;
   processingTime: number;
 }
-
 
 export interface ExportData {
   frameNumber: number;
   timestamp: string;
   fishCount: number;
   confidence: number;
+}
+
+export interface DetectionResponse {
+  count: number;
+  detections: DetectionResult[];
 }
