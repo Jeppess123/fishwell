@@ -1,0 +1,31 @@
+# Backend - Python
+__pycache__/
+*.py[cod]
+*.pkl
+*.cache
+*.db
+*.sqlite3
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# AI model files
+*.pt
+*.pth
+*.onnx
+
+# YOLO training outputs
+runs/
+labels.cache
+
+# Video, images, datasets
+*.mp4
+*.avi
+*.mov
+*.zip
+
+# System
+.DS_Store
+Thumbs.db
