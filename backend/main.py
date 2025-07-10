@@ -17,10 +17,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/health")
+async def health_check():
+    return {"status": "ok", "message": "Fish detection backend is running"}
+
+@app.options("/detect_frame")
+async def detect_frame_options():
+    return {"message": "CORS preflight OK"}
+
 @app.post("/detect_frame")
 async def detect_frame(request: Request):
     body = await request.json()
     image_data = body.get("image")
+    return_annotated = body.get("return_annotated", False)
 
     if not image_data:
         return JSONResponse(content={"error": "No image provided"}, status_code=400)
@@ -28,14 +37,21 @@ async def detect_frame(request: Request):
     try:
         image = decode_base64_image(image_data)
         start = time.time()
-        detections = run_detection(image)
+        detections = run_detection(image, return_annotated=return_annotated)
         end = time.time()
 
-        return JSONResponse(content={
-            "detections": detections,
-            "count": len(detections),
-            "processingTime": round(end - start, 3)
-        })
+        response_data = {
+            "detections": detections["detections"],
+            "count": len(detections["detections"]),
+            "processingTime": round(end - start, 3),
+            "image_width": detections["image_width"],
+            "image_height": detections["image_height"]
+        }
+        
+        if return_annotated and detections["annotated_frame"]:
+            response_data["annotated_frame"] = detections["annotated_frame"]
+
+        return JSONResponse(content=response_data)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
@@ -50,9 +66,11 @@ async def detect(file: UploadFile = File(...)):
         end = time.time()
 
         return JSONResponse(content={
-            "detections": detections,
-            "count": len(detections),
-            "processingTime": round(end - start, 3)
+            "detections": detections["detections"],
+            "count": len(detections["detections"]),
+            "processingTime": round(end - start, 3),
+            "image_width": detections["image_width"],
+            "image_height": detections["image_height"]
         })
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)

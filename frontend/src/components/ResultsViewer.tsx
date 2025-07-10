@@ -35,14 +35,20 @@ const ResultsViewer: React.FC<ResultsViewerProps> = ({
       frame.detections.forEach((det: DetectionResult) => {
         const { x, y, width, height, confidence, class: label } = det;
 
+        // Convert normalized coordinates (0-1) to canvas coordinates
+        const canvasX = x * canvas.width;
+        const canvasY = y * canvas.height;
+        const canvasWidth = width * canvas.width;
+        const canvasHeight = height * canvas.height;
+
         ctx.strokeStyle = '#00BFFF';
         ctx.lineWidth = 2;
-        ctx.strokeRect(x, y, width, height);
+        ctx.strokeRect(canvasX, canvasY, canvasWidth, canvasHeight);
 
         ctx.font = '14px Arial';
         ctx.fillStyle = '#00BFFF';
         const text = `${label ?? 'Fish'} (${Math.round(confidence * 100)}%)`;
-        ctx.fillText(text, x + 4, y + 16);
+        ctx.fillText(text, canvasX + 4, canvasY + 16);
       });
     };
   }, [results, currentFrame]);
